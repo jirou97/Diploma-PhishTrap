@@ -1,7 +1,8 @@
-<img style="align:'center'; display: block; margin-left: auto; margin-right: auto; max-width: 100%; height: auto; width: 25%;" src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
-
+<p align="center">
+<img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
+</p>
 # Description 
-* A web application for URL classification. This application is a part of a diploma thesis.*
+* A web application for URL classification. This application is a part of a diploma thesis. *
 
 ### Phishing 
 Phishing is one of the luring techniques used by phishing artist in the intention of exploiting the personal details of unsuspected users. Phishing website is a mock website that looks similar in appearance but different in destination. The unsuspected users post their data thinking that these websites come from trusted financial institutions. Several antiphishing techniques emerge continuously but phishers come with new technique by breaking all the antiphishing mechanisms. Hence there is a need for efficient mechanism for the prediction of phishing website.
@@ -34,3 +35,7 @@ Website can be found [here](http://83.212.77.114:8080/)
 - Download the [models not in github](https://github.com/souliotispanagiotis/PhishTrap/tree/master#models-not-in-github) and add them to the folder /models
 - execute the command "python app.py"
 - Have fun!
+
+## A use case is shown below
+
+![Use Case] (https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif)
