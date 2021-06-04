@@ -1,6 +1,7 @@
 <p align="center">
 <img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
 </p>
+
 # Description 
 * A web application for URL classification. This application is a part of a diploma thesis. *
 
