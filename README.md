@@ -1,4 +1,4 @@
-![logo] (https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png)
+![logo](https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png)
 # PhishTrap 💻
 *A web app to check if given URL leads to phishing sites*
 
