@@ -37,5 +37,6 @@ Website can be found [here](http://83.212.77.114:8080/)
 - Have fun!
 
 ## A use case is shown below
-
-![Use Case] (https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif)
+<p align="center">
+![Use Case](https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif)
+</p>
