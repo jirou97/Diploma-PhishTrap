@@ -2,8 +2,7 @@
 <img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
 </p>
 
-# PhishTrap 💻
-*A web app to check the legitimacy of a given URL.*
+# *A web app to check the legitimacy of a given URL.*
 
 ### Phishing 
 Phishing is one of the luring techniques used by phishing artist in the intention of exploiting the personal details of unsuspected users. Phishing website is a mock website that looks similar in appearance but different in destination. The unsuspected users post their data thinking that these websites come from trusted financial institutions. Several antiphishing techniques emerge continuously but phishers come with new technique by breaking all the antiphishing mechanisms. Hence there is a need for efficient mechanism for the prediction of phishing website.
@@ -38,5 +37,5 @@ User can also see the probabilities provided by each classifier.
 
 ## A use case is shown below
 <p align="center">
-<img src="https://raw.githubusercontent.com/souliotispanagiotis/PhishTrap/main/use_case.gif?token=ATZQQJY22X5WXSVMLNVGRPDAXH2H2" />
+<img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif" />
 </p>
