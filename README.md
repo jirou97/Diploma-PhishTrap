@@ -1,3 +1,4 @@
+![logo] (https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png)
 # PhishTrap 💻
 *A web app to check if given URL leads to phishing sites*
 
@@ -9,7 +10,7 @@ PhishTrap classifies a given URL as phishing or legitimate and therefore is a fi
 malicious sites.
 PhishTrap uses machine learning algorithms to predict the legitimacy of any given website, depending upon the 63 features extracted from it.
 It also uses a CNN model and a voting scheme that combines the prediction probabilities from each classifier.
-## Accuracy of models:
+## Metrics of the models :
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
 
 ## Features extracted: 
