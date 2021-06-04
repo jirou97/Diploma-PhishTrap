@@ -15,11 +15,11 @@ It also uses a CNN model and a voting scheme that combines the prediction probab
 We have developed the website app using Flask, providing simple and easy mode for interaction. Just enter the URL, the click on search button to see the prediction.
 User can also see the probabilities provided by each classifier.
 
-## Technical Report 
-A technical report on the optimal classifiers and their hyperparameters can be found [here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical%20Report.pdf).
-
 ## Metrics of the models :
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
+
+## Technical Report 
+For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical%20Report.pdf).
 
 ## Features extracted: 
 The features and their explanation can be found [here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/features.pdf).
@@ -43,3 +43,4 @@ The features and their explanation can be found [here](https://github.com/soulio
 </p>
 
 Check how the app works in different devices [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/Devices%20Views)
+
