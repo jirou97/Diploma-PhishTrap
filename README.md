@@ -1,7 +1,5 @@
-# SUE (Safe user experience) 💻
+# PhishTrap 💻
 *A web app to check if given url leads to phishing sites*
-
-*Tech Stack - Python (ML Model) ![Python](https://img.shields.io/badge/python%20-%23E34F26.svg?&style=for-the-badge&logo=python&ogoColor=white), Bootstrap , ![HTML](https://img.shields.io/badge/html%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white) and ![CSS](https://img.shields.io/badge/css%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white)*
 
 
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/syedareehaquasar)
@@ -18,12 +16,12 @@ It also uses a CNN model and a voting scheme that combines the prediction probab
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
 
 ## Features extracted: 
-The features and their explanation can be found ![here](http://83.212.77.114:8080/) under the tab features.
+The features and their explanation can be found [here](http://83.212.77.114:8080/) under the tab features.
 
 ### Website
 We have developed the website using Flask, providing simple and easy mode for interaction. Just enter the url, the click on search button to see the prediction.
 User can also see the probabilities provided by each classifier.
-![Site can be found here](http://83.212.77.114:8080/)
+[Site can be found here](http://83.212.77.114:8080/)
 
 ### Models not in github
 [Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
