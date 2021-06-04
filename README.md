@@ -1,4 +1,4 @@
-<img align="right" src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
+<img style:"display: block;margin-left: auto;margin-right: auto;max-width: 100%;height: auto;width: 25%;"align="center" src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/PhishTrap/static/logo6.png" alt="logo">
 
 # Description 
 * A web application for URL classification. This application is a part of a diploma thesis.*
