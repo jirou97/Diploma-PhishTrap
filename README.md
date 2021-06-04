@@ -21,8 +21,8 @@ User can also see the probabilities provided by each classifier.
 Website can be found [here](http://83.212.77.114:8080/)
 
 ### Models not in github
--[Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
--[Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
+- [Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
+- [Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
 
 
 
