@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+	<title>
+		Phishing URL Detection
+	</title>
+<head>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size : 20px;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: right;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  padding-right:80px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: slategray;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  margin: 8px 10px;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+  opacity: 0.7;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+tr {
+	font-size: 25px;
+	border-bottom: 1px solid #000;
+}
+th {
+	padding-left: 15px;
+	padding-right: 15px;
+    border-bottom: 1px solid #000;
+	}
+td {
+  padding-top:15px;
+  padding-bottom:15px;
+  padding-right:15px;   
+  font-size: 18px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: royalblue;
+  color: white;
+  text-align: center;
+}
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto; 
+  width: 25%;
+
+}
+a:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+#pageloader
+{
+  background: rgba( 255, 255, 255, 0.8 );
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+#pageloader img
+{
+  left: 50%;
+  margin-left: -32px;
+  margin-top: -32px;
+  position: absolute;
+  top: 50%;
+}
+#pageloader p
+{
+  left: 37%;
+  margin-left: -32px;
+  margin-top: -32px;
+  position: absolute;
+  top: 45%;
+}
+</style>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="msapplication-TileColor" content="#2b5797">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body onload="myFunction()">
+
+
+<div id="pageloader">
+   <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
+   <p>Extracting features from given URL. Please wait...</p>
+</div>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Statistics')">Statistics</button>
+  <button class="tablinks" onclick="openTab(event, 'Research_Report')">Research Report</button>
+  <button class="tablinks" onclick="openTab(event, 'Features')">Features</button>
+  <button class="tablinks" onclick="openTab(event, 'URL_Detection')">URL Detection</button>
+</div>
+
+<div id="Statistics" class="tabcontent">
+{% if counter != 0 %}
+	<div hidden id="legit">{{counter_legit}}</div>
+	<div hidden id="phish">{{counter_phish}}</div>
+	<h2> Statistics </h2>
+			This application has been used <b>{{ counter }}</b> times. Results: <b>{{counter_legit}} %</b> legitimate URLs - <b>{{counter_phish }} %</b> phishing URLs.
+			<div id="piechart" align="center" style=" margin:5px; width: 900px; height: 500px;"></div>
+{% else %}
+	<h3> Sorry, don't have anything to show you. </h3> 
+{% endif %}
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var leg = parseInt(document.getElementById('legit').innerHTML);
+  var ph = parseInt(document.getElementById('phish').innerHTML);
+  var data = google.visualization.arrayToDataTable([
+  ['Prediction', 'Number of predictions'],
+  ['Predicted Legitimate', leg],
+  ['Predicted Phishing', ph]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Predictions','is3D':true, 'width':700, 'height':500};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+
+
+function get_action(form) 
+{
+    var v = grecaptcha.getResponse();
+    if(v.length == 0)
+    {
+        document.getElementById('captcha').innerHTML="You can't leave Captcha Code empty";
+        return false;
+    }
+    else
+    {
+         document.getElementById('captcha').innerHTML="Captcha completed";
+        return true; 
+    }
+}
+
+</script>
+{% if load_form %}
+	<div id="URL_Detection" class="tabcontent">
+	  <div class="container">
+		  <a href="http://83.212.77.114:8080/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
+			<h1 style="text-align=center; position = relative"> Check if your URL is Phishing: </h1>
+			<div id="error_message"> </div>
+			<hr>
+			<form action="/" id="myForm" method="post" onsubmit="return is_url();">
+
+				<label for="url"><b>Enter the URL:</b></label>
+				<input style="width: 300px; height: 30px; " type="search" placeholder="Type the URL here." name="url" id="url" required>
+				<button type="submit" style="height: 30px;" class="registerbtn">Search</button>
+			  </div>
+			  <div class="g-recaptcha" data-sitekey="6LdixdQaAAAAAKi4-TQ14FAEr2k8pzKuKVJt3FNe" data-callback="verifyCaptcha"></div>
+				<div id="g-recaptcha-error"></div>
+			</form>
+				Disclaimer! This web application is part of research project. We don’t guarantee 100% reliable results!
+				<hr>		
+		   </div>
+	</div>
+{% else %}
+<div id="URL_Detection" class="tabcontent">
+	  
+	  <div class="container">
+	  <a href="http://83.212.77.114:8080/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
+		</div>
+		<div id='results' style='border-style:solid;'>
+		 <h3> Results for URL: {{ url }}</h3> 
+		 <hr>
+			<table>
+				{% if error_message %}
+					<div style="color:red"> {{ error_message }} </div>
+				{% endif %}
+				{% if answer %}
+					<tr>
+						<th> Model </th>
+						<th> Outcome </th>
+						<th> Probability </th>
+					</tr>
+					{% for x in answer %}
+						<tr> 
+							<td> {{ x[0] }} </td>
+							{% if x[1] == 'Phishing' %}
+								<td style="background-color:#FF0000"> {{ x[1] }} </td>
+							{% else %}
+								<td style="background-color:#00FF00"> {{ x[1] }} </td>						
+							{% endif %}
+							<td style="text-align:center"> {{ x[2] }} </td>
+							</hr>
+						</tr> 
+					{% endfor %}
+					{% if overall %}
+						<tr> 
+							<td style="border-bottom:none; border-top:none; font-size:23px;text-align: center;font-weight: bold;"> Overall estimation </td> 
+							{% if overall[0] == 'Phishing' %}
+								<td style="background-color:#FF0000;border-bottom:none; border-top:none; font-size:23px;text-align:center;font-weight: bold;"> {{ overall[0] }} </td>
+							{% elif overall[0] == 'Legitimate' %}
+								<td style="background-color:#00FF00;border-bottom:none; border-top:none; font-size:23px;text-align:center;font-weight: bold;"> {{ overall[0] }} </td>						
+							{% else %}
+								<td style="background-color:#FFFF00;border-bottom:none; border-top:none; font-size:23px;text-align:center;font-weight: bold;"> {{ overall[0] }} </td>						
+							{% endif %} 
+							<td style="border-bottom:none; border-top:none; font-size:23px;text-align: center;font-weight: bold;"> {{overall[1]}} </td>
+						</tr>
+					{% endif %}
+				{% endif %}
+			</table>
+			{% if disclaimer %}
+				<hr>
+				Disclaimer! This web application is part of research project. We don’t guarantee 100% reliable results!
+			{% endif %}
+		</div>
+		
+		<hr>
+		<div id="error_message"> </div>
+		<form action="/" id="myForm" method="post" onsubmit="return is_url();">
+			<label for="url"><b>Search again:</b></label>
+			<input style="width: 300px; height: 30px; " type="search" placeholder="Type the URL here." name="url" id="url" required>
+			<button type="submit" style="height: 30px;" class="registerbtn">Search</button>
+			<div class="g-recaptcha" data-sitekey="6LdixdQaAAAAAKi4-TQ14FAEr2k8pzKuKVJt3FNe" data-callback="verifyCaptcha"></div>
+			<div id="g-recaptcha-error"></div>
+		</form>
+		<hr>
+		</div>
+</div>
+{% endif %}
+<div id="Features" style='font-size:15px' class="tabcontent">
+  <div style="width: 900px;text-align:left;padding-top: 50px;margin:0px auto;min-height: 400px;">
+                    <p>
+                        This project is constructed of 4 types of features
+                    </p>
+                    <p>
+                        (1) Domain-based features. Such as WHOIS information, domain and its sections, days after the domain was registered and remaining days before the domain expires.
+                    </p>
+
+                    <p>
+                        (2) Webpage-based features and JS properties. Such as disabled right click.
+                    </p>
+
+                    <p>
+                        (3) Lexical Features. Such as the number of dots in URL, number of parameters, TLD length.
+                    </p>
+
+                    <p>
+                        (4) HTTP Headers. Such as if a cookie is being set.
+                    </p>
+
+					<p>
+                        All 63 features used in this system are list below:
+                    </p>
+
+                    <p align="center" style="margin-bottom:4.0pt; text-align:center"><span style="line-height:105%"><span style="layout-grid-mode:char"><span><span style="line-height:105%">TABLE 1</span></span></span></span></p>
+
+                    <p align="center" style="margin-bottom:4.0pt; text-align:center"><span style="line-height:105%"><span style="layout-grid-mode:char"><span><span style="line-height:105%">The description of all 63 features</span></span></span></span></p>
+
+                    <table class="Table" style="border-collapse:collapse; border:none" width="100%">
+                        <tbody>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:10.98%; border-top:solid windowtext 1.0pt; border-left:none; border-bottom:solid windowtext 1.0pt; border-right:none" width="10%">
+                                    <p align="left" style=""><span style=""><b><span><span>Type</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:24.34%; border-top:solid windowtext 1.0pt; border-left:none; border-bottom:solid windowtext 1.0pt; border-right:none" width="24%">
+                                    <p align="left" style=""><span style=""><b><span><span>feature</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border-top:solid windowtext 1.0pt; border-left:none; border-bottom:solid windowtext 1.0pt; border-right:none" width="64%">
+                                    <p align="left" style=""><span style=""><b><span><span>description</span></span></b></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td rowspan="4" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                    <p align="left" style=""><span style=""><b><span><span>Domain</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>dns_record</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>DNS record in WHOIS database.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>check_age_of_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Days since the domain was registered in WHOIS database.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>check_ssl</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Check for valid SSL certificate.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                               <td nowrap="nowrap" style="width:24.34%; border:none; border-bottom:solid windowtext 1.0pt" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>days_till_expiration_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none; border-bottom:solid windowtext 1.0pt" width="64">
+                                    <p align="left" style=""><span style=""><span><span>Days till expiration of the SSL certificate</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td rowspan="14" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                    <p align="left" style=""><span style=""><b><span><span>Webpage based</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>favicon</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If the favicon is loaded from another domain.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>iFrame</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>IFrame tag.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>rightClick</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If the rightClick is disabled.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>onmouseover</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If the mouseOver property show different URL than the redirected.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>check_URL_of_anchor</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If a tags direct to different domain or nowhere.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>sfh</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>No actions after submitting form.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>a_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of a tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>form_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of form tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>email_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of email tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>pass_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of password tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>hidden_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of hidden tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>actions_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of action tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>signin_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of signin tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none; border-bottom:solid windowtext 1.0pt" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>signup_tags_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none; border-bottom:solid windowtext 1.0pt" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of signup tags in the html of the webpage.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td rowspan="43" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                    <p align="left" style=""><span style=""><b><span><span>Lexical</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>double_slash</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>More that 1 occurance of "//" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_questionmark_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "?" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_at_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "@" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hashtag_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "#" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dollar_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "$" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_percent_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "%" in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>TLD_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of letters of the TLD(Top Level Domain)</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>TLD_count</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of sub-TLDs </span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>URL_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Length of the whole URL</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>email_in_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If there is an email in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>word_script_in_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If the word "script" is in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>check_https_in_url</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If "https" is in the URL.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the Domain.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the Domain.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>count_vowels</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of vowels in the Domain</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>Domain_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Length of the Domain.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>Ip_in_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Ip in Domain.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>Client_or_Server_in_domain</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Words "client" or "server" in Domain.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_at_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "@" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_slash_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "/" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_percent_directory</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "%" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>directory_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Length of the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_File</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the File.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_File</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the File.</span></span></span></p>
+                                </td>
+                            </tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_at_File</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "@" in the File.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_percent_File</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "%" in the Directory.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>File_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Length of the File.</span></span></span></p>
+                                </td>
+                            </tr>
+							
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dot_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "." in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_at_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "@" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_underline_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "_" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_hashtag_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "#" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_dollar_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "$" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							</tr><tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_percent_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of "%" in the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>params_length</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Length of the Parameters.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>tld_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If there is a TLD in the Parameters</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none; border-bottom:solid windowtext 1.0pt" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>count_params</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none; border-bottom:solid windowtext 1.0pt" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>How many parameters are being set.</span></span></span></p>
+                                </td>
+                            </tr>
+							
+                            <tr style="">
+                                <td rowspan="2" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                    <p align="left" style=""><span style=""><b><span><span>HTTP Headers</span></span></b></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>cookie</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>If a cookie is being set.</span></span></span></p>
+                                </td>
+                            </tr>
+                            <tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none; border-bottom:solid windowtext 1.0pt" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>strict_trans_sec</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none; border-bottom:solid windowtext 1.0pt" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Existance of Strict_Trans_Sec header.</span></span></span></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="a"><span style="line-height:200%"><span lang="EN-US" style="font-size:11.5pt"><span style="line-height:200%"><span style="font-family:Times New Roman">All features are numeric.</span></span></span></span></p>
+
+
+                </div>
+</div>
+
+<div id="Research_Report" style='text-align:center' class="tabcontent">
+  	
+  This application is part of a diploma thesis and is used for research purposes.<br><br>
+  We use the below Machine Learning algorithms to make predictions and a voting scheme to ensemble a final result. <br> <br>
+  <img class="logo" style="width:50%; height:50%;" src="/static/final_models_voting.jpg">
+  <hr>
+  The full research report can be found <a href="https://github.com/souliotispanagiotis/PhishTrap">here</a>.
+  
+</div>
+
+<footer>
+	PhishTrap © 2021
+	<i style='padding-left:20px'> <a href='https://github.com/souliotispanagiotis/PhishTrap'> About us </a> </i>
+</footer>
+<script>
+		function submitUserForm() {
+			var response = grecaptcha.getResponse();
+			if(response.length == 0) {
+				document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+				return false;
+			}
+			return true;
+		}			
+		function verifyCaptcha() {
+			document.getElementById('g-recaptcha-error').innerHTML = '';
+		}
+		function is_url(){
+		
+			
+			var googleResponse = jQuery('#g-recaptcha-response').val();
+			var url_inp = document.getElementById("url");
+			var url =url_inp.value;
+			var urlR = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+			var is_url = url.match(urlR);
+			if ( googleResponse != "" &&  is_url != null ) {
+				var div = document.getElementById("error_message");
+				div.innerHTML = '';
+				$("#pageloader").fadeIn();
+				return submitUserForm(); //commit the form
+			}
+			else if ( !googleResponse) {
+				document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+				return false;
+			}
+			else {
+				var div = document.getElementById("error_message");
+				if (!url.startsWith('http')){
+					div.innerHTML = 'URL needs to start with http:// or https://';
+				}
+				else {
+					div.innerHTML = "This doesn't seem like a URL. Try again!";
+				}
+				div.style.color = '#ff0000';
+				url_inp.focus();
+				return false;
+			}
+		}
+		
+
+function openTab(evt, tab) {
+	var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tab).style.display = "block";
+    evt.currentTarget.className += " active";
+    if (tab === 'Statistics') {
+	  drawChart();
+    }
+}
+function myFunction(){
+	document.getElementById('URL_Detection').style.display = "block";
+}
+</script>
+   
+</body>
+</html> 
