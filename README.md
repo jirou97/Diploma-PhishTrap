@@ -1,5 +1,5 @@
 # PhishTrap 💻
-*A web app to check if given url leads to phishing sites*
+*A web app to check if given URL leads to phishing sites*
 
 ### Phishing 
 Phishing is one of the luring techniques used by phishing artist in the intention of exploiting the personal details of unsuspected users. Phishing website is a mock website that looks similar in appearance but different in destination. The unsuspected users post their data thinking that these websites come from trusted financial institutions. Several antiphishing techniques emerge continuously but phishers come with new technique by breaking all the antiphishing mechanisms. Hence there is a need for efficient mechanism for the prediction of phishing website.
@@ -16,7 +16,7 @@ It also uses a CNN model and a voting scheme that combines the prediction probab
 The features and their explanation can be found [here](http://83.212.77.114:8080/) under the tab features.
 
 ### Website
-We have developed the website using Flask, providing simple and easy mode for interaction. Just enter the url, the click on search button to see the prediction.
+We have developed the website using Flask, providing simple and easy mode for interaction. Just enter the URL, the click on search button to see the prediction.
 User can also see the probabilities provided by each classifier.
 Website can be found [here](http://83.212.77.114:8080/)
 
