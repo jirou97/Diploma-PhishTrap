@@ -24,6 +24,13 @@ Website can be found [here](http://83.212.77.114:8080/)
 - [Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
 - [Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
 
+## To download the website
+- Pull this github repository
+- cd ./PhishTrap
+- pip install -r requirements.txt
+- Download the models not in github and add them to the folder /models
+- python app.py
+- Have fun!
 
 
 ### References:
