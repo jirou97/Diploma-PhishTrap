@@ -28,7 +28,7 @@ Website can be found [here](http://83.212.77.114:8080/)
 - Pull this github repository
 - cd ./PhishTrap
 - pip install -r requirements.txt
-- Download the models not in github and add them to the folder /models
+- Download the models not in github and add them to the folder [/models](https://github.com/souliotispanagiotis/PhishTrap/tree/master#models-not-in-github)
 - python app.py
 - Have fun!
 
