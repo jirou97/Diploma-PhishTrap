@@ -9,31 +9,8 @@ import joblib
 from sklearn.preprocessing import StandardScaler
 import os
 import math
-# keras backend to implement the custom objects for CNN model
-from keras import backend as K
 
 app = Flask(__name__)
-# Custom recall
-def recall_m(y_true, y_pred):
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-    recall = true_positives / (possible_positives + K.epsilon())
-    return recall
-
-# Custom accuracy
-def accuracy_m(y_true, y_pred):
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    true_negatives = K.sum(K.round(K.clip((K.constant(1) - y_true) * (K.constant(1) - y_pred), 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    paronomastis = possible_positives + predicted_positives - true_positives + true_negatives
-    return ((true_negatives + true_positives)/(paronomastis+K.epsilon()))
-# Custom metric to monitor
-def rousoul(y_true, y_pred):
-    tacc = accuracy_m(y_true, y_pred)
-    trec = recall_m(y_true, y_pred)
-    return tacc+3*trec
-
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # Load sklearn classifiers
@@ -44,7 +21,7 @@ models.append(('MLP',joblib.load("{}/models/model_mlp_opt.sav".format(dir_path))
 models.append(('Random Forest',joblib.load("{}/models/model_rf_opt.sav".format(dir_path)) )) 
 models.append(('Gradient Boosting', joblib.load("{}/models/model_gb_opt2.sav".format(dir_path)) )) 
 # Load CNN model
-models.append(('CNN',tf.keras.models.load_model("{}/models/model_cnn_opt.h5".format(dir_path),custom_objects={'rousoul':rousoul}))) 
+models.append(('CNN',tf.keras.models.load_model("{}/models/model_cnn_opt.h5".format(dir_path)))) 
 
 # Transformer to scale the data
 sc = StandardScaler()
