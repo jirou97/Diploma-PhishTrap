@@ -12,17 +12,15 @@ PhishTrap classifies a given URL as phishing or legitimate and therefore is a fi
 malicious sites.
 PhishTrap uses machine learning algorithms to predict the legitimacy of any given website, depending upon the 63 features extracted from it.
 It also uses a CNN model and a voting scheme that combines the prediction probabilities from each classifier.
+We have developed the website app using Flask, providing simple and easy mode for interaction. Just enter the URL, the click on search button to see the prediction.
+User can also see the probabilities provided by each classifier.
 ## Metrics of the models :
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
 
 ## Features extracted: 
 The features and their explanation can be found [here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/features.pdf).
 
-### Website app
-We have developed the website app using Flask, providing simple and easy mode for interaction. Just enter the URL, the click on search button to see the prediction.
-User can also see the probabilities provided by each classifier.
-
-### Models not in github
+### Models not in Github
 - [Download * Gradient Boosting * model](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
 - [Download * Random Forest * model](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
 
