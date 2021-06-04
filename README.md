@@ -1,10 +1,7 @@
 # PhishTrap 💻
 *A web app to check if given url leads to phishing sites*
 
-
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/syedareehaquasar)
-
-### Phishing 🎣
+### Phishing 
 Phishing is one of the luring techniques used by phishing artist in the intention of exploiting the personal details of unsuspected users. Phishing website is a mock website that looks similar in appearance but different in destination. The unsuspected users post their data thinking that these websites come from trusted financial institutions. Several antiphishing techniques emerge continuously but phishers come with new technique by breaking all the antiphishing mechanisms. Hence there is a need for efficient mechanism for the prediction of phishing website.
 
 ### PhishTrap
@@ -21,11 +18,11 @@ The features and their explanation can be found [here](http://83.212.77.114:8080
 ### Website
 We have developed the website using Flask, providing simple and easy mode for interaction. Just enter the url, the click on search button to see the prediction.
 User can also see the probabilities provided by each classifier.
-[Site can be found here](http://83.212.77.114:8080/)
+Website can be found [here](http://83.212.77.114:8080/)
 
 ### Models not in github
-[Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
-[Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
+-[Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
+-[Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
 
 
 
