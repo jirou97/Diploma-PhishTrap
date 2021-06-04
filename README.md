@@ -37,3 +37,5 @@ The features and their explanation can be found [here](https://github.com/soulio
 <p align="center">
 <img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif" />
 </p>
+
+Check how the app works in different devices [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/Devices%20Views)
