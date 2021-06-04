@@ -21,13 +21,14 @@ User can also see the probabilities provided by each classifier.
 Website can be found [here](http://83.212.77.114:8080/)
 
 ### Models not in github
-- [Gradient Boosting](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
-- [Random Forest](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
+- [Download Gradient Boosting model](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
+- [Download Random Forest model](https://1drv.ms/u/s!AlWc1s-bBYW7gmNCQp6UAR-dMUGF?e=3aSrf5)
 
-## To download the website
+## How to install the web application
 - Pull this github repository
 - cd ./PhishTrap
+- Create a virtual environment ( More information can be found [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv) )
 - pip install -r requirements.txt
-- Download the [models not in github](https://github.com/souliotispanagiotis/PhishTrap/tree/master#models-not-in-github) and add them to the folder models
-- python app.py
+- Download the [models not in github](https://github.com/souliotispanagiotis/PhishTrap/tree/master#models-not-in-github) and add them to the folder /models
+- execute the command "python app.py"
 - Have fun!
