@@ -19,7 +19,7 @@ User can also see the probabilities provided by each classifier.
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
 
 ## Technical Report 
-For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical%20Report.pdf).
+For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical_Report.pdf).
 
 ## Features extracted: 
 The features and their explanation can be found [here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/features.pdf).
@@ -33,7 +33,7 @@ The features and their explanation can be found [here](https://github.com/soulio
 - cd ./PhishTrap
 - Create a virtual environment ( More information can be found [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#installing-virtualenv) )
 - pip install -r requirements.txt
-- Download the [models not in github](https://github.com/souliotispanagiotis/PhishTrap/tree/master#models-not-in-github) and add them to the folder /models
+- Download the models not in github and add them to the folder /models
 - execute the command "python app.py"
 - Have fun!
 
@@ -43,4 +43,3 @@ The features and their explanation can be found [here](https://github.com/soulio
 </p>
 
 Check how the app works in different devices [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/Devices%20Views)
-
