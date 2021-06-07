@@ -118,7 +118,8 @@ def count_params (params):
     return params.count('&') + 1
   else :
     return 0
- 
+
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb 
 def favicon_anchor_whois_days(url):
   extract_res = tldextract.extract(url)
   url_ref = extract_res.domain 
@@ -179,6 +180,7 @@ def favicon_anchor_whois_days(url):
   
   return favicon_return,anchor_return,whois_return, whois_days
 
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb 
 def check_favicon(url):
   try :
     extract_res = tldextract.extract(url)
@@ -210,6 +212,7 @@ def check_dns_record(url):
     return 1
 
 #Age of Domain
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb  
 def check_age_of_domain(url):
   extract_res = tldextract.extract(url)
   url_ref = extract_res.domain + "." + extract_res.suffix
@@ -218,7 +221,7 @@ def check_age_of_domain(url):
     return str((datetime.datetime.now() - whois_res["creation_date"]).days)
   except:
     return 0
-
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb 
 def iframe_mouseover_rightclick(url):
   try:
     html_content = requests.get(url).text
@@ -318,7 +321,7 @@ def shortened_redirects(url):
 
 def check_https(url):
     return 1 if 'https' in url else 0
-  
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb   
 def sfh(u):
     try:
         programhtml = requests.get(u).text
@@ -344,7 +347,7 @@ def sfh(u):
         # Check this point
         return 0
     
-
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb 
 def url_validator(url):
     try:
         result = urlparse(url)
@@ -393,7 +396,9 @@ def find_page_counters(url):
     return a_tags_count,form_tags_count,email_tags_count,pass_tags_count,hidden_tags_count,actions_tags_count,pop_up_count,signin_tags_count,signup_tags_count
   except :
     return 0,0,0,0,0,0,0,0,0
+
 #URL of Anchor
+#https://github.com/himanshi18037/WhatAPhish/blob/main/Features_For_New_DataPoint.ipynb 
 def check_URL_of_anchor(url):
   try :
     extract_res = tldextract.extract(url)
