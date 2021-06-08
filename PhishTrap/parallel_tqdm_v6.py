@@ -555,7 +555,6 @@ def extract_features(url):
   features_extracted[51] = tld_in_params(params)  #tld in params
   features_extracted[52] = count_params(params)   #number of parameters
 
-  #KINEZOS
   cookie, strict_trans_sec = check_headers(url) #cookie, strict_trans_sec
   features_extracted[53] = cookie
   features_extracted[54] = strict_trans_sec
