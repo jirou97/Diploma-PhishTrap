@@ -15,6 +15,9 @@ It also uses a CNN model and a voting scheme that combines the prediction probab
 We have developed the website app using Flask, providing simple and easy mode for interaction. Just enter the URL, the click on search button to see the prediction.
 User can also see the probabilities provided by each classifier.
 
+## Dataset 
+The dataset used in this project can be found [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/dataset).
+
 ## Metrics of the models :
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
 
