@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 # Extract features from given url
-from parallel_tqdm_v6 import extract_features
+from feature_extraction import extract_features
 # To check if a url is active by inspecting the HTTP response code.
 from is_active import check_active_url
 import pandas as pd
@@ -17,16 +17,19 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 import tensorflow as tf
 models = []  
 models.append(('KNN',joblib.load("{}/models/model_knn_opt.sav".format(dir_path)) )) 
-models.append(('MLP',joblib.load("{}/models/model_mlp_opt.sav".format(dir_path)) )) 
-models.append(('Random Forest',joblib.load("{}/models/model_rf_opt.sav".format(dir_path)) )) 
-models.append(('Gradient Boosting', joblib.load("{}/models/model_gb_opt2.sav".format(dir_path)) )) 
+models.append(('MLP',joblib.load("{}/models/model_mlp_opt.sav".format(dir_path)) ))
+try :
+    models.append(('Random Forest',joblib.load("{}/models/model_rf_opt.sav".format(dir_path)) )) 
+    models.append(('Gradient Boosting', joblib.load("{}/models/model_gb_opt2.sav".format(dir_path)) ))
+except :
+    print("Random Forest and Gradient Boosting Models not found. You can find them here https://github.com/souliotispanagiotis/PhishTrap#models-not-in-github .")
 # Load CNN model
 models.append(('CNN',tf.keras.models.load_model("{}/models/model_cnn_opt.h5".format(dir_path)))) 
 
 # Transformer to scale the data
 sc = StandardScaler()
 # Read the train data and transform them
-df_train = pd.read_csv("./train3_int.csv")
+df_train = pd.read_csv("./train.csv")
 X_train = sc.fit_transform(df_train.iloc[:,:-1])
 
 constant_Phishing = math.log(0.12)
