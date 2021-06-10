@@ -16,7 +16,7 @@ We have developed the website app using Flask, providing simple and easy mode fo
 User can also see the probabilities provided by each classifier.
 
 ## Dataset 
-The dataset used in this project can be found [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/dataset).
+The dataset created in this project can be found [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/dataset).
 
 ## Metrics of the models :
 ![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
