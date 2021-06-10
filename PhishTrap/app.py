@@ -22,7 +22,7 @@ try :
     models.append(('Random Forest',joblib.load("{}/models/model_rf_opt.sav".format(dir_path)) )) 
     models.append(('Gradient Boosting', joblib.load("{}/models/model_gb_opt2.sav".format(dir_path)) ))
 except :
-    print("Random Forest and Gradient Boosting Models not found. You can find them here https://github.com/souliotispanagiotis/PhishTrap#models-not-in-github .")
+    print("[Warning]: Random Forest and Gradient Boosting Models not found. You can find them here https://github.com/souliotispanagiotis/PhishTrap#models-not-in-github .")
 # Load CNN model
 models.append(('CNN',tf.keras.models.load_model("{}/models/model_cnn_opt.h5".format(dir_path)))) 
 
