@@ -239,7 +239,7 @@ function get_action(form)
 {% if load_form %}
 	<div id="URL_Detection" class="tabcontent">
 	  <div class="container">
-		  <a href="http://127.0.0.1:5000/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
+		  <a href="http://83.212.77.114:8080/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
 			<h1 style="text-align=center; position = relative"> Check if your URL is Phishing: </h1>
 			<div id="error_message"> </div>
 			<hr>
@@ -260,7 +260,7 @@ function get_action(form)
 <div id="URL_Detection" class="tabcontent">
 	  
 	  <div class="container">
-	  <a href="http://127.0.0.1:5000/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
+	  <a href="http://83.212.77.114:8080/"> <img class="logo" src='static/logo6.png' alt='logo' >  </a>
 		</div>
 		<div id='results' style='border-style:solid;'>
 		 <h3> Results for URL: {{ url }}</h3> 
@@ -364,7 +364,7 @@ function get_action(form)
                                 </td>
                             </tr>
                             <tr style="">
-                                <td rowspan="4" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                <td rowspan="6" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
                                     <p align="left" style=""><span style=""><b><span><span>Domain</span></span></b></span></p>
                                 </td>
                                 <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
@@ -396,6 +396,22 @@ function get_action(form)
                                 </td>
                                 <td nowrap="nowrap" style="width:64.68%; border:none; border-bottom:solid windowtext 1.0pt" width="64">
                                     <p align="left" style=""><span style=""><span><span>Days till expiration of the SSL certificate</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>qty_redirects</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Number of redirects till the final URL.</span></span></span></p>
+                                </td>
+                            </tr>
+							<tr style="">
+                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
+                                    <p align="left" style=""><span style=""><span><span>url_shortened</span></span></span></p>
+                                </td>
+                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
+                                    <p align="left" style=""><span style=""><span><span>Check if the url is shortened.</span></span></span></p>
                                 </td>
                             </tr>
                             <tr style="">
@@ -514,7 +530,7 @@ function get_action(form)
                                 </td>
                             </tr>
                             <tr style="">
-                                <td rowspan="43" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
+                                <td rowspan="41" style="width:10.98%; border:none; border-bottom:solid windowtext 1.0pt" width="10%">
                                     <p align="left" style=""><span style=""><b><span><span>Lexical</span></span></b></span></p>
                                 </td>
                                 <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
@@ -677,21 +693,6 @@ function get_action(form)
                                 </td>
                             </tr>
 							<tr style="">
-                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
-                                    <p align="left" style=""><span style=""><span><span>qty_dot_directory</span></span></span></p>
-                                </td>
-                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
-                                    <p align="left" style=""><span style=""><span><span>Number of "." in the Directory.</span></span></span></p>
-                                </td>
-                            </tr>
-							<tr style="">
-                                <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
-                                    <p align="left" style=""><span style=""><span><span>qty_hyphen_directory</span></span></span></p>
-                                </td>
-                                <td nowrap="nowrap" style="width:64.68%; border:none" width="64%">
-                                    <p align="left" style=""><span style=""><span><span>Number of "-" in the Directory.</span></span></span></p>
-                                </td>
-                            </tr><tr style="">
                                 <td nowrap="nowrap" style="width:24.34%; border:none" width="24%">
                                     <p align="left" style=""><span style=""><span><span>qty_dot_directory</span></span></span></p>
                                 </td>
