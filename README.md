@@ -19,7 +19,7 @@ User can also see the probabilities provided by each classifier.
 The dataset created in this project can be found [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/dataset).
 
 ## Metrics of the models :
-![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/master/final_models_voting.jpg)
+![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/main/final_models_voting.jpg)
 
 ## Technical Report 
 For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical_Report.pdf).
