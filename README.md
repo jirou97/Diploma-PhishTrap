@@ -16,16 +16,16 @@ We have developed the website app using Flask, providing simple and easy mode fo
 User can also see the probabilities provided by each classifier.
 
 ## Dataset 
-The dataset created in this project can be found [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/dataset).
+The dataset created in this project can be found [here](https://github.com/jirou97/Diploma-PhishTrap/tree/main/dataset).
 
 ## Metrics of the models :
-![models metrics](https://github.com/souliotispanagiotis/PhishTrap/blob/main/final_models_voting.jpg)
+![models metrics](https://github.com/jirou97/Diploma-PhishTrap/blob/main/final_models_voting.jpg)
 
 ## Technical Report 
-For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/Technical_Report.pdf).
+For an extented technical report on the optimal classifiers and their hyperparameters [click here](https://github.com/jirou97/Diploma-PhishTrap/blob/main/Technical_Report.pdf).
 
 ## Features extracted: 
-The features and their explanation can be found [here](https://github.com/souliotispanagiotis/PhishTrap/blob/main/features.pdf).
+The features and their explanation can be found [here](https://github.com/jirou97/Diploma-PhishTrap/blob/main/features.pdf).
 
 ## Models not in Github
 - [Download * Gradient Boosting * model](https://1drv.ms/u/s!AlWc1s-bBYW7gmTFQ20EXM4uBqSX?e=WFcqA9)
@@ -42,7 +42,7 @@ The features and their explanation can be found [here](https://github.com/soulio
 
 ## A use case is shown below
 <p align="center">
-<img src="https://github.com/souliotispanagiotis/PhishTrap/blob/main/use_case.gif" />
+<img src="https://github.com/jirou97/Diploma-PhishTrap/blob/main/use_case.gif" />
 </p>
 
-Check how the app works in different devices [here](https://github.com/souliotispanagiotis/PhishTrap/tree/main/Devices%20Views)
+Check how the app works in different devices [here](https://github.com/jirou97/Diploma-PhishTrap/tree/main/Devices%20Views)
